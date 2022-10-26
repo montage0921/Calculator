@@ -5,6 +5,8 @@ const operatorBtns = document.querySelectorAll(`.operator`);
 const featureBtns = document.querySelectorAll(`.feature`);
 const currentDisplay = document.querySelector(`.current-operation`);
 const lastDisplay = document.querySelector(`.last-operation`);
+const ACButton = document.querySelector(`.clear`);
+const deleteButton = document.querySelector(`.delete`);
 
 /////Initial Parameters/////
 let numEntered;
@@ -35,7 +37,7 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 
-////////Event//////
+////////Keyboard Event//////
 window.addEventListener(`keydown`, function (e) {
   //for enter number
   //maximum length of display is 25
@@ -64,8 +66,17 @@ window.addEventListener(`keydown`, function (e) {
   operatorsArr.forEach((oper) => {
     if (oper === e.key) operator(e.key);
   });
+
+  //for AC
+  if (e.key === `Escape`) clearAll();
+
+  //for DEL
+  if (e.key === `Backspace`) del();
 });
 
+///Click Events//////
+
+//number buttons
 numbersBtns.forEach((num) =>
   num.addEventListener(`click`, function (e) {
     const clickButton = e.target.textContent;
@@ -91,10 +102,10 @@ numbersBtns.forEach((num) =>
   })
 );
 
+//operator(+-*/=) buttons
 operatorBtns.forEach((oper) =>
   oper.addEventListener(`click`, function (e) {
     const clickOperation = e.target.getAttribute(`data-key`);
-    console.log(clickOperation);
 
     operatorsArr.forEach((oper) => {
       if (oper === clickOperation) operator(clickOperation);
@@ -102,9 +113,15 @@ operatorBtns.forEach((oper) =>
   })
 );
 
+//AC BUTTON
+ACButton.addEventListener(`click`, clearAll);
+
+//DEL BUTTON
+deleteButton.addEventListener(`click`, del);
+
 ////Event Functions///////
 
-///1. store entered number into the object
+///1. store first number into the object
 
 function enterNumber(num) {
   numEntered = num; //'2'
@@ -115,6 +132,7 @@ function enterNumber(num) {
   currentDisplay.textContent = object.strForDisplay; //display:`12+`
 }
 
+///2. Perform and display operations.
 function operator(oper) {
   //put number into object.num1 if its empty
   if (
@@ -227,7 +245,6 @@ function operator(oper) {
       object.strForDisplay += object.operator;
       currentDisplay.textContent = object.strForDisplay;
     } else if (object.strForDisplay.indexOf(`*`) > -1) {
-      console.log(`ok`);
       let arr = object.strForDisplay.split(``);
 
       let index = arr.indexOf(`*`);
@@ -349,4 +366,40 @@ function operator(oper) {
     }
   }
 }
-//14+2*5+7*10-5/2   expected:432.5
+
+//3. Clear All
+function clearAll() {
+  numEntered = null;
+  object.num1 = null;
+  object.num2 = null;
+  object.operator = null;
+  object.strForDisplay = ``;
+  result = null;
+  currentDisplay.textContent = ``;
+  lastDisplay.textContent = ``;
+}
+
+//4. delete
+function del() {
+  if (typeof object.strForDisplay !== `number`) {
+    const deletedValue = object.strForDisplay[object.strForDisplay.length - 1];
+
+    if (
+      deletedValue !== `+` &&
+      deletedValue !== `-` &&
+      deletedValue !== `*` &&
+      deletedValue !== `/`
+    ) {
+      const numAfterDel = object.strForDisplay.slice(0, -1);
+
+      object.strForDisplay = ``;
+
+      enterNumber(numAfterDel);
+    } else {
+      object.strForDisplay = object.strForDisplay.slice(0, -1);
+      currentDisplay.textContent = object.strForDisplay;
+
+      object.operator = null;
+    }
+  } else clearAll();
+}
