@@ -45,8 +45,19 @@ window.addEventListener(`keydown`, function (e) {
     if (+e.key === +e.key) enterNumber(e.key);
     //For decimal point
 
-    if (e.key === `.` && object.strForDisplay.indexOf(`.`) === -1)
-      enterNumber(e.key);
+    if (e.key === `.`) {
+      let result = [];
+      let arr = object.strForDisplay.split(``);
+
+      for (let i = 0; i <= arr.length; i++) {
+        if (arr[i] === `.`) result.push(`.`);
+      }
+      console.log(result.length);
+
+      if (result.length <= 1) {
+        enterNumber(e.key);
+      }
+    }
   }
 
   //for enter operator
@@ -63,8 +74,19 @@ numbersBtns.forEach((num) =>
       if (+clickButton === +clickButton) enterNumber(clickButton);
       //For decimal point
 
-      if (clickButton === `.` && object.strForDisplay.indexOf(`.`) === -1)
-        enterNumber(clickButton);
+      if (clickButton === `.`) {
+        let result = [];
+        let arr = object.strForDisplay.split(``);
+
+        for (let i = 0; i <= arr.length; i++) {
+          if (arr[i] === `.`) result.push(`.`);
+        }
+        console.log(result.length);
+
+        if (result.length <= 1) {
+          enterNumber(clickButton);
+        }
+      }
     }
   })
 );
