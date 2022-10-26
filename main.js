@@ -10,7 +10,6 @@ const deleteButton = document.querySelector(`.delete`);
 const ansButton = document.querySelector(`.answer`);
 const openBtn = document.querySelector(`.open`);
 const screen = document.querySelector(`.screen`);
-console.log(screen);
 
 /////Initial Parameters/////
 let numEntered;
@@ -97,7 +96,6 @@ numbersBtns.forEach((num) =>
         for (let i = 0; i <= arr.length; i++) {
           if (arr[i] === `.`) result.push(`.`);
         }
-        console.log(result.length);
 
         if (result.length <= 1) {
           enterNumber(clickButton);
@@ -175,7 +173,6 @@ function operator(oper) {
   }
   //It's NOT the first time user enter operator and the operator is NOT `=`
   else if (object.operator && oper !== `=`) {
-    console.log(object.strForDisplay);
     if (object.strForDisplay.indexOf(`+`) > -1) {
       let arr = object.strForDisplay.split(``);
 
@@ -287,10 +284,12 @@ function operator(oper) {
     if (oper !== `=`) {
       if (object.operator === `+`) {
         result = add(object.num1, object.num2);
+        result = +result.toFixed(4);
 
         let arr1 = object.strForDisplay.split(``);
         object.strForDisplay = arr1.slice(0, -1).join(``);
 
+        console.log(object.strForDisplay.split(``));
         lastDisplay.textContent = object.strForDisplay;
 
         object.strForDisplay = result + oper;
@@ -301,6 +300,7 @@ function operator(oper) {
         object.operator = oper;
       } else if (object.operator === `-`) {
         result = subtract(object.num1, object.num2);
+        result = +result.toFixed(4);
 
         let arr1 = object.strForDisplay.split(``);
         object.strForDisplay = arr1.slice(0, -1).join(``);
@@ -315,6 +315,7 @@ function operator(oper) {
         object.operator = oper;
       } else if (object.operator === `*`) {
         result = multiply(object.num1, object.num2);
+        result = +result.toFixed(4);
 
         let arr1 = object.strForDisplay.split(``);
         object.strForDisplay = arr1.slice(0, -1).join(``);
@@ -329,6 +330,7 @@ function operator(oper) {
         object.operator = oper;
       } else if (object.operator === `/`) {
         result = divide(object.num1, object.num2);
+        result = +result.toFixed(4);
 
         let arr1 = object.strForDisplay.split(``);
         object.strForDisplay = arr1.slice(0, -1).join(``);
@@ -345,10 +347,14 @@ function operator(oper) {
     }
 
     if (oper === `=`) {
-      lastDisplay.textContent = object.strForDisplay;
+      lastDisplay.textContent = object.strForDisplay
+        .split(``)
+        .slice(0, -1)
+        .join(``);
 
       if (object.operator === `+`) {
         result = object.num1 + object.num2;
+        result = +result.toFixed(4);
         currentDisplay.textContent = result;
 
         object.strForDisplay = result;
@@ -357,6 +363,7 @@ function operator(oper) {
         object.operator = null;
       } else if (object.operator === `-`) {
         result = object.num1 - object.num2;
+        result = +result.toFixed(4);
         currentDisplay.textContent = result;
 
         object.strForDisplay = result;
@@ -365,6 +372,7 @@ function operator(oper) {
         object.operator = null;
       } else if (object.operator === `*`) {
         result = object.num1 * object.num2;
+        result = +result.toFixed(4);
         currentDisplay.textContent = result;
 
         object.strForDisplay = result;
@@ -373,6 +381,7 @@ function operator(oper) {
         object.operator = null;
       } else if (object.operator === `/`) {
         result = object.num1 / object.num2;
+        result = +result.toFixed(4);
         currentDisplay.textContent = result;
 
         object.strForDisplay = result;
