@@ -55,8 +55,30 @@ window.addEventListener(`keydown`, function (e) {
   });
 });
 
-numbersBtns.forEach((num) => num.addEventListener(`keydown`, enterNumber));
-operatorBtns.forEach((oper) => oper.addEventListener(`keydown`, operator));
+numbersBtns.forEach((num) =>
+  num.addEventListener(`click`, function (e) {
+    const clickButton = e.target.textContent;
+
+    if (object.strForDisplay.length <= 25) {
+      if (+clickButton === +clickButton) enterNumber(clickButton);
+      //For decimal point
+
+      if (clickButton === `.` && object.strForDisplay.indexOf(`.`) === -1)
+        enterNumber(clickButton);
+    }
+  })
+);
+
+operatorBtns.forEach((oper) =>
+  oper.addEventListener(`click`, function (e) {
+    const clickOperation = e.target.getAttribute(`data-key`);
+    console.log(clickOperation);
+
+    operatorsArr.forEach((oper) => {
+      if (oper === clickOperation) operator(clickOperation);
+    });
+  })
+);
 
 ////Event Functions///////
 
@@ -72,7 +94,6 @@ function enterNumber(num) {
 }
 
 function operator(oper) {
-  let isOperatorMet = false;
   //put number into object.num1 if its empty
   if (
     numEntered !== null &&
@@ -206,7 +227,6 @@ function operator(oper) {
     }
   }
 
-  console.log(object);
   if (object.num1 !== null && object.num2 !== null) {
     if (oper !== `=`) {
       if (object.operator === `+`) {
