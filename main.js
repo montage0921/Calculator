@@ -72,8 +72,14 @@ function enterNumber(num) {
 }
 
 function operator(oper) {
-  if (numEntered !== null && +numEntered === +numEntered) {
-    if (object.num1 === null) object.num1 = numEntered; //12
+  let isOperatorMet = false;
+  //put number into object.num1 if its empty
+  if (
+    numEntered !== null &&
+    +numEntered === +numEntered &&
+    object.num1 === null
+  ) {
+    object.num1 = numEntered; //12
   }
 
   numEntered = null; //null
@@ -92,26 +98,43 @@ function operator(oper) {
   //It's NOT the first time user enter operator and the operator is NOT `=`
   else if (object.operator && oper !== `=`) {
     operatorsArr.forEach((operator) => {
-      if (object.strForDisplay.indexOf(operator) > -1) {
+      if (
+        object.strForDisplay.indexOf(operator) > -1 &&
+        isOperatorMet === false
+      ) {
         let arr = object.strForDisplay.split(``);
         let index = arr.indexOf(operator);
+
         let secondNum = +arr.slice(index + 1).join(``);
+
         object.num2 = secondNum;
-      }
-    });
-    object.strForDisplay += object.operator;
-    currentDisplay.textContent = object.strForDisplay;
-  } else {
-    operatorsArr.forEach((operator) => {
-      if (object.strForDisplay.indexOf(operator) > -1) {
-        let arr = object.strForDisplay.split(``);
-        let index = arr.indexOf(operator);
-        let secondNum = +arr.slice(index + 1).join(``);
-        object.num2 = secondNum;
+        console.log(object);
+        object.strForDisplay += object.operator;
+        currentDisplay.textContent = object.strForDisplay;
+        isOperatorMet = true;
       }
     });
   }
 
+  //   It's NOT the first time user enter operator and the operator IS `=`
+  else {
+    operatorsArr.forEach((operator) => {
+      if (
+        object.strForDisplay.indexOf(operator) > -1 &&
+        isOperatorMet === false
+      ) {
+        let arr = object.strForDisplay.split(``);
+
+        let index = arr.indexOf(operator);
+
+        let secondNum = +arr.slice(index + 1).join(``);
+        object.num2 = secondNum;
+        isOperatorMet = true;
+      }
+    });
+  }
+
+  console.log(object);
   if (object.num1 !== null && object.num2 !== null) {
     if (oper !== `=`) {
       if (object.operator === `+`) {
@@ -174,7 +197,6 @@ function operator(oper) {
     }
 
     if (oper === `=`) {
-      console.log(object);
       lastDisplay.textContent = object.strForDisplay;
 
       if (object.operator === `+`) {
@@ -185,7 +207,6 @@ function operator(oper) {
         object.num1 = result;
         object.num2 = null;
         object.operator = null;
-        console.log(object);
       } else if (object.operator === `-`) {
         result = object.num1 - object.num2;
         currentDisplay.textContent = result;
@@ -194,7 +215,6 @@ function operator(oper) {
         object.num1 = result;
         object.num2 = null;
         object.operator = null;
-        console.log(object);
       } else if (object.operator === `*`) {
         result = object.num1 * object.num2;
         currentDisplay.textContent = result;
@@ -203,7 +223,6 @@ function operator(oper) {
         object.num1 = result;
         object.num2 = null;
         object.operator = null;
-        console.log(object);
       } else if (object.operator === `/`) {
         result = object.num1 / object.num2;
         currentDisplay.textContent = result;
@@ -212,7 +231,6 @@ function operator(oper) {
         object.num1 = result;
         object.num2 = null;
         object.operator = null;
-        console.log(object);
       }
     }
   }
