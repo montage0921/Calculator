@@ -44,6 +44,7 @@ window.addEventListener(`keydown`, function (e) {
     //if user press a number key
     if (+e.key === +e.key) enterNumber(e.key);
     //For decimal point
+
     if (e.key === `.` && object.strForDisplay.indexOf(`.`) === -1)
       enterNumber(e.key);
   }
@@ -77,8 +78,29 @@ function operator(oper) {
 
   numEntered = null; //null
 
-  if (!object.operator) {
-    object.operator = oper; //`+`
+  //It's the first time user enter operator and the operator is not `=`
+  if (!object.operator && oper !== `=`) {
+    object.operator = oper;
+    object.strForDisplay += object.operator;
+    currentDisplay.textContent = object.strForDisplay;
+  }
+
+  //It's the first time user enter operator and the operator is `=`
+  else if (!object.operator && oper === `=`) {
+    currentDisplay.textContent = object.strForDisplay;
+  }
+  //It's NOT the first time user enter operator and the operator is NOT `=`
+  else if (object.operator && oper !== `=`) {
+    operatorsArr.forEach((operator) => {
+      if (object.strForDisplay.indexOf(operator) > -1) {
+        let arr = object.strForDisplay.split(``);
+        let index = arr.indexOf(operator);
+        let secondNum = +arr.slice(index + 1).join(``);
+        object.num2 = secondNum;
+      }
+    });
+    object.strForDisplay += object.operator;
+    currentDisplay.textContent = object.strForDisplay;
   } else {
     operatorsArr.forEach((operator) => {
       if (object.strForDisplay.indexOf(operator) > -1) {
@@ -90,61 +112,108 @@ function operator(oper) {
     });
   }
 
-  object.strForDisplay += object.operator;
-  console.log(object);
-  currentDisplay.textContent = object.strForDisplay;
-
   if (object.num1 !== null && object.num2 !== null) {
-    if (object.operator === `+`) {
-      result = add(object.num1, object.num2);
+    if (oper !== `=`) {
+      if (object.operator === `+`) {
+        result = add(object.num1, object.num2);
 
-      let arr1 = object.strForDisplay.split(``);
-      object.strForDisplay = arr1.slice(0, -1).join(``);
+        let arr1 = object.strForDisplay.split(``);
+        object.strForDisplay = arr1.slice(0, -1).join(``);
 
+        lastDisplay.textContent = object.strForDisplay;
+
+        object.strForDisplay = result + oper;
+
+        currentDisplay.textContent = object.strForDisplay;
+        object.num1 = result;
+
+        object.operator = oper;
+      } else if (object.operator === `-`) {
+        result = subtract(object.num1, object.num2);
+
+        let arr1 = object.strForDisplay.split(``);
+        object.strForDisplay = arr1.slice(0, -1).join(``);
+
+        lastDisplay.textContent = object.strForDisplay;
+
+        object.strForDisplay = result + oper;
+
+        currentDisplay.textContent = object.strForDisplay;
+        object.num1 = result;
+
+        object.operator = oper;
+      } else if (object.operator === `*`) {
+        result = multiply(object.num1, object.num2);
+
+        let arr1 = object.strForDisplay.split(``);
+        object.strForDisplay = arr1.slice(0, -1).join(``);
+
+        lastDisplay.textContent = object.strForDisplay;
+
+        object.strForDisplay = result + oper;
+
+        currentDisplay.textContent = object.strForDisplay;
+        object.num1 = result;
+
+        object.operator = oper;
+      } else if (object.operator === `/`) {
+        result = divide(object.num1, object.num2);
+
+        let arr1 = object.strForDisplay.split(``);
+        object.strForDisplay = arr1.slice(0, -1).join(``);
+
+        lastDisplay.textContent = object.strForDisplay;
+
+        object.strForDisplay = result + oper;
+
+        currentDisplay.textContent = object.strForDisplay;
+        object.num1 = result;
+
+        object.operator = oper;
+      }
+    }
+
+    if (oper === `=`) {
       console.log(object);
       lastDisplay.textContent = object.strForDisplay;
-      object.strForDisplay = result + oper;
-      console.log(object);
-      currentDisplay.textContent = object.strForDisplay;
-      object.num1 = result;
-      oper === `=` ? (object.operator = null) : (object.operator = oper);
-    } else if (object.operator === `-`) {
-      result = subtract(object.num1, object.num2);
 
-      let arr1 = object.strForDisplay.split(``);
-      object.strForDisplay = arr1.slice(0, -1).join(``);
+      if (object.operator === `+`) {
+        result = object.num1 + object.num2;
+        currentDisplay.textContent = result;
 
-      console.log(object);
-      lastDisplay.textContent = object.strForDisplay;
-      object.strForDisplay = result + oper;
-      console.log(object);
-      currentDisplay.textContent = object.strForDisplay;
-      object.num1 = result;
-      oper === `=` ? (object.operator = null) : (object.operator = oper);
-    } else if (object.operator === `*`) {
-      result = multiply(object.num1, object.num2);
-      let arr1 = object.strForDisplay.split(``);
-      object.strForDisplay = arr1.slice(0, -1).join(``);
+        object.strForDisplay = result;
+        object.num1 = result;
+        object.num2 = null;
+        object.operator = null;
+        console.log(object);
+      } else if (object.operator === `-`) {
+        result = object.num1 - object.num2;
+        currentDisplay.textContent = result;
 
-      console.log(object);
-      lastDisplay.textContent = object.strForDisplay;
-      object.strForDisplay = result + oper;
-      console.log(object);
-      currentDisplay.textContent = object.strForDisplay;
-      object.num1 = result;
-      oper === `=` ? (object.operator = null) : (object.operator = oper);
-    } else if (object.operator === `/`) {
-      result = divide(object.num1, object.num2);
-      let arr1 = object.strForDisplay.split(``);
-      object.strForDisplay = arr1.slice(0, -1).join(``);
+        object.strForDisplay = result;
+        object.num1 = result;
+        object.num2 = null;
+        object.operator = null;
+        console.log(object);
+      } else if (object.operator === `*`) {
+        result = object.num1 * object.num2;
+        currentDisplay.textContent = result;
 
-      console.log(object);
-      lastDisplay.textContent = object.strForDisplay;
-      object.strForDisplay = result + oper;
-      console.log(object);
-      currentDisplay.textContent = object.strForDisplay;
-      object.num1 = result;
-      oper === `=` ? (object.operator = null) : (object.operator = oper);
+        object.strForDisplay = result;
+        object.num1 = result;
+        object.num2 = null;
+        object.operator = null;
+        console.log(object);
+      } else if (object.operator === `/`) {
+        result = object.num1 / object.num2;
+        currentDisplay.textContent = result;
+
+        object.strForDisplay = result;
+        object.num1 = result;
+        object.num2 = null;
+        object.operator = null;
+        console.log(object);
+      }
     }
   }
 }
