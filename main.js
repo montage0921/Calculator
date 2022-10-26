@@ -124,7 +124,7 @@ deleteButton.addEventListener(`click`, del);
 
 //Ans Button
 ansButton.addEventListener(`click`, function () {
-  enterNumber(ans);
+  if (ans) enterNumber(ans);
 });
 
 //Open Button
@@ -204,7 +204,6 @@ function operator(oper) {
       object.strForDisplay += object.operator;
       currentDisplay.textContent = object.strForDisplay;
     } else if (object.strForDisplay.indexOf(`*`) > -1) {
-      console.log(`ok`);
       let arr = object.strForDisplay.split(``);
 
       let index = arr.indexOf(`*`);
@@ -280,6 +279,7 @@ function operator(oper) {
     }
   }
 
+  //Calculation
   if (object.num1 !== null && object.num2 !== null) {
     if (oper !== `=`) {
       if (object.operator === `+`) {
