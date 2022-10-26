@@ -76,11 +76,12 @@ body {
 }
 
 .last-operation {
-  font-size: 20px;
+  font-size: 10px;
 }
 
 .current-operation {
   font-size: 30px;
+  word-break: break-all;
 }
 
 .panel {
