@@ -7,9 +7,11 @@ const currentDisplay = document.querySelector(`.current-operation`);
 const lastDisplay = document.querySelector(`.last-operation`);
 const ACButton = document.querySelector(`.clear`);
 const deleteButton = document.querySelector(`.delete`);
+const ansButton = document.querySelector(`.answer`);
 
 /////Initial Parameters/////
 let numEntered;
+let ans;
 
 const object = {
   num1: null,
@@ -118,6 +120,11 @@ ACButton.addEventListener(`click`, clearAll);
 
 //DEL BUTTON
 deleteButton.addEventListener(`click`, del);
+
+//Ans Button
+ansButton.addEventListener(`click`, function () {
+  enterNumber(ans);
+});
 
 ////Event Functions///////
 
@@ -374,6 +381,8 @@ function clearAll() {
   object.num2 = null;
   object.operator = null;
   object.strForDisplay = ``;
+  ans = result;
+
   result = null;
   currentDisplay.textContent = ``;
   lastDisplay.textContent = ``;
