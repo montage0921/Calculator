@@ -8,6 +8,9 @@ const lastDisplay = document.querySelector(`.last-operation`);
 const ACButton = document.querySelector(`.clear`);
 const deleteButton = document.querySelector(`.delete`);
 const ansButton = document.querySelector(`.answer`);
+const openBtn = document.querySelector(`.open`);
+const screen = document.querySelector(`.screen`);
+console.log(screen);
 
 /////Initial Parameters/////
 let numEntered;
@@ -124,6 +127,13 @@ deleteButton.addEventListener(`click`, del);
 //Ans Button
 ansButton.addEventListener(`click`, function () {
   enterNumber(ans);
+});
+
+//Open Button
+openBtn.addEventListener(`click`, function () {
+  if (screen.classList.contains(`hidden`)) clearAll();
+
+  screen.classList.toggle(`hidden`);
 });
 
 ////Event Functions///////
@@ -382,7 +392,7 @@ function clearAll() {
   object.operator = null;
   object.strForDisplay = ``;
   ans = result;
-
+  console.log(ans);
   result = null;
   currentDisplay.textContent = ``;
   lastDisplay.textContent = ``;

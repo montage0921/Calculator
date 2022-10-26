@@ -127,3 +127,13 @@ body {
   background-color: rgb(29, 29, 230);
   color: black;
 }
+
+.panel button.open {
+  border: none;
+  background-color: rgba(73, 86, 120, 255);
+  font-size: 40px;
+}
+
+.hidden {
+  background-color: black;
+}
