@@ -97,41 +97,113 @@ function operator(oper) {
   }
   //It's NOT the first time user enter operator and the operator is NOT `=`
   else if (object.operator && oper !== `=`) {
-    operatorsArr.forEach((operator) => {
-      if (
-        object.strForDisplay.indexOf(operator) > -1 &&
-        isOperatorMet === false
-      ) {
-        let arr = object.strForDisplay.split(``);
-        let index = arr.indexOf(operator);
+    console.log(object.strForDisplay);
+    if (object.strForDisplay.indexOf(`+`) > -1) {
+      let arr = object.strForDisplay.split(``);
 
-        let secondNum = +arr.slice(index + 1).join(``);
+      let index = arr.indexOf(`+`);
+      let secondNum = +arr.slice(index + 1).join(``);
 
-        object.num2 = secondNum;
-        console.log(object);
-        object.strForDisplay += object.operator;
-        currentDisplay.textContent = object.strForDisplay;
-        isOperatorMet = true;
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (
+      object.strForDisplay.indexOf(`-`) > -1 &&
+      object.strForDisplay.indexOf(`*`) < 0 &&
+      object.strForDisplay.indexOf(`/`) < 0
+    ) {
+      let secondNum;
+      let arr = object.strForDisplay.split(``);
+      let result = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === `-`) result.push(i);
       }
-    });
+
+      if (result.length === 1) {
+        secondNum = +arr.slice(result[0] + 1).join(``);
+      } else if (result.length === 2) {
+        secondNum = +arr.slice(result[1] + 1).join(``);
+      }
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (object.strForDisplay.indexOf(`*`) > -1) {
+      console.log(`ok`);
+      let arr = object.strForDisplay.split(``);
+
+      let index = arr.indexOf(`*`);
+      let secondNum = +arr.slice(index + 1).join(``);
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (object.strForDisplay.indexOf(`/`) > -1) {
+      console.log(`ok`);
+      let arr = object.strForDisplay.split(``);
+
+      let index = arr.indexOf(`/`);
+      let secondNum = +arr.slice(index + 1).join(``);
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    }
   }
 
   //   It's NOT the first time user enter operator and the operator IS `=`
   else {
-    operatorsArr.forEach((operator) => {
-      if (
-        object.strForDisplay.indexOf(operator) > -1 &&
-        isOperatorMet === false
-      ) {
-        let arr = object.strForDisplay.split(``);
+    if (object.strForDisplay.indexOf(`+`) > -1) {
+      let arr = object.strForDisplay.split(``);
 
-        let index = arr.indexOf(operator);
+      let index = arr.indexOf(`+`);
+      let secondNum = +arr.slice(index + 1).join(``);
 
-        let secondNum = +arr.slice(index + 1).join(``);
-        object.num2 = secondNum;
-        isOperatorMet = true;
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (
+      object.strForDisplay.indexOf(`-`) > -1 &&
+      object.strForDisplay.indexOf(`*`) < 0 &&
+      object.strForDisplay.indexOf(`/`) < 0
+    ) {
+      let secondNum;
+      let arr = object.strForDisplay.split(``);
+      let result = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === `-`) result.push(i);
       }
-    });
+
+      if (result.length === 1) {
+        secondNum = +arr.slice(result[0] + 1).join(``);
+      } else if (result.length === 2) {
+        secondNum = +arr.slice(result[1] + 1).join(``);
+      }
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (object.strForDisplay.indexOf(`*`) > -1) {
+      console.log(`ok`);
+      let arr = object.strForDisplay.split(``);
+
+      let index = arr.indexOf(`*`);
+      let secondNum = +arr.slice(index + 1).join(``);
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    } else if (object.strForDisplay.indexOf(`/`) > -1) {
+      console.log(`ok`);
+      let arr = object.strForDisplay.split(``);
+
+      let index = arr.indexOf(`/`);
+      let secondNum = +arr.slice(index + 1).join(``);
+
+      object.num2 = secondNum;
+      object.strForDisplay += object.operator;
+      currentDisplay.textContent = object.strForDisplay;
+    }
   }
 
   console.log(object);
