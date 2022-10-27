@@ -154,7 +154,7 @@ function operator(oper) {
   numEntered = null; //null
 
   //It's the first time user enter operator and the operator is not `=`
-  if (!object.operator && oper !== `=`) {
+  if (!object.operator && oper !== `=` && object.num1) {
     object.operator = oper;
     object.strForDisplay += object.operator;
     currentDisplay.textContent = object.strForDisplay;
