@@ -118,7 +118,8 @@ body {
   color: white;
 }
 
-.operator {
+.operator,
+.special {
   background-color: #e98152;
   color: white;
 }
@@ -141,4 +142,10 @@ body {
 
 .hidden {
   background-color: black;
+}
+
+button[data-key="="] {
+  grid-column-start: 3;
+  grid-column-end: 5;
+  width: auto;
 }
